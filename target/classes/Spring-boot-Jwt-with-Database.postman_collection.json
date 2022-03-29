@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "e6027f22-bf11-4943-bd49-9019c1d9b470",
+		"name": "Spring-boot-Jwt-with-Database",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register Normal User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authentication-Data",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"user1@email.com\",\r\n    \"password\": \"user123\",\r\n    \"allowedRoles\": [ \"USER\" ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/jwt/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"jwt",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Admin User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "827e12d4-a893-4b20-be20-e709f05457cc",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"userid\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"admin\",\n    \"email\": \"admin@email.com\",\n    \"password\": \"admin123\",\n    \"allowedRoles\": [ \"ADMIN\" ]\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/jwt/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"jwt",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "451863af-0864-43fd-b4ff-d6c28443269f",
+						"exec": [
+							"var token = responseBody;",
+							"postman.setEnvironmentVariable(\"userToken\", token.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"user\",\n\t\"password\": \"user123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/jwt/create/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"jwt",
+						"create",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create AdminToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "60c2ad84-83ab-440f-beac-2aff886ada50",
+						"exec": [
+							"var token = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"adminToken\", token.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"admin\",\n\t\"password\": \"admin123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/jwt/create/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"jwt",
+						"create",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validate User Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authentication-Data",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwicm9sZXMiOiJST0xFX1VTRVIiLCJpYXQiOjE2NDg1NjI5MzUsImV4cCI6MTY0ODU4MDkzNX0.95b2NlkGiTHzgh0EPsa8JK_Y1yp9Tu6QYzSOmuUyz7o",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"docsconsoleUser\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/jwt/validate/userToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"jwt",
+						"validate",
+						"userToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validate Admin Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authentication-Data",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiUk9MRV9BRE1JTiIsImlhdCI6MTY0ODU2Mjk3MiwiZXhwIjoxNjQ4NTgwOTcyfQ.r6EaX93OwE5pF6ZRtuMaPGArYuyhmY9T3zKEvrSDmRw"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"docsconsoleAdmin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/jwt/validate/adminToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"jwt",
+						"validate",
+						"adminToken"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
