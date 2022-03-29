@@ -2,7 +2,6 @@ package com.docsconsole.tutorials.model.entity;
 
 import lombok.Data;
 
-
 import javax.persistence.*;
 
 @Data

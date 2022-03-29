@@ -1,7 +1,7 @@
 package com.docsconsole.tutorials.service;
 
-import com.docsconsole.tutorials.repo.RoleRepo;
 import com.docsconsole.tutorials.model.entity.Role;
+import com.docsconsole.tutorials.repo.RoleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
